@@ -55,7 +55,6 @@
                 <h3 style="text-align: center; display: inline;">
                   Not Finished
                 </h3>
-                ({{ notEndTime }})
               </div>
 
               <div class="form-group  mb-3">
@@ -87,7 +86,6 @@
             <div class="col-6 " style="padding: 1rem;">
               <div>
                 <h3 style="text-align: center; display: inline;">Finished</h3>
-                ({{ endTime }})
               </div>
               <div class="form-group  mb-3">
                 <div class="input-group input-group-alternative">
@@ -123,7 +121,7 @@
     </main>
     <script>
       const dbConnect = require("./assets/data/db");
-      const courses = require("./assets/data/courses.model");
+      const project = require("./assets/data/project.model");
       const shell = require("electron").shell;
       document.addEventListener("click", function(event) {
         if (

@@ -2,10 +2,8 @@ const app = new Vue({
   el: "#app",
   data: {
     end: [],
-    endTime: 0,
 
     notEnd: [],
-    notEndTime: 0,
     searchEnd: "",
     searchNotEnd: ""
   },
@@ -27,7 +25,7 @@ const app = new Vue({
   },
   methods: {
     async done(id) {
-      await courses.update(JSON.parse(JSON.stringify(id)), { done: true });
+      await project.update(JSON.parse(JSON.stringify(id)), { done: true });
       let obj = null;
       this.notEnd = this.notEnd.filter(e => {
         if (e._id == id) {
@@ -37,11 +35,9 @@ const app = new Vue({
         return true;
       });
       this.end = [...this.end, obj];
-      this.notEndTime -= parseInt(obj.length);
-      this.endTime += parseInt(obj.length);
     },
     async notDone(id) {
-      await courses.update(JSON.parse(JSON.stringify(id)), { done: false });
+      await project.update(JSON.parse(JSON.stringify(id)), { done: false });
       let obj = null;
       this.end = this.end.filter(e => {
         if (e._id == id) {
@@ -51,22 +47,18 @@ const app = new Vue({
         return true;
       });
       this.notEnd = [...this.notEnd, obj];
-      this.notEndTime += parseInt(obj.length);
-      this.endTime -= parseInt(obj.length);
     }
   }
 });
 
 const start = async () => {
   await dbConnect();
-  const allCourese = await courses.getAll();
-  allCourese.forEach(e => {
+  const allProject = await project.getAll();
+  allProject.forEach(e => {
     if (e.done) {
       app.end.push(e);
-      app.endTime += parseInt(e.length);
     } else {
       app.notEnd.push(e);
-      app.notEndTime += parseInt(e.length);
     }
   });
   console.log(app.end.length, app.notEnd.length);
