@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Data Camp</title>
+
+    <link rel="stylesheet" href="./assets/vendor/argon/css/argon.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+
+  <style>
+    /* ==================
+    *  VARIABLES
+    * ================== */
+
+    ul.todo-list {
+      margin-top: 20px;
+      list-style: none;
+      padding: 0 1rem 0 0;
+    }
+    ul.todo-list .delete {
+      margin-left: 0.5rem;
+    }
+    ul.todo-list li {
+      position: relative;
+      border-radius: 0.3rem;
+      margin-bottom: 1rem;
+      background-color: #f5f5f5;
+      padding: 1rem 1.5rem;
+    }
+    .card-body {
+      position: relative;
+    }
+    .card-body::before {
+      content: "";
+      background: #5e72e4;
+      width: 2px;
+      height: 300px;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, -54px);
+    }
+  </style>
+  <body>
+    <main
+      class="d-flex bg-gradient-default vh-100 justify-content-center align-items-center"
+    >
+      <div>
+        <div id="app" style="width: 800px;" class="card   border-0">
+          <div class="card-header"></div>
+          <div class="card-body row">
+            <div class="col-6  " style="padding: 1rem;">
+              <div>
+                <h3 style="text-align: center; display: inline;">
+                  Not Finished
+                </h3>
+                ({{ notEndTime }})
+              </div>
+
+              <div class="form-group  mb-3">
+                <div class="input-group input-group-alternative">
+                  <input
+                    placeholder="search ....."
+                    type="text"
+                    class="form-control"
+                    v-model="searchNotEnd"
+                  />
+                </div>
+              </div>
+
+              <ul class="todo-list" style="height: 300px; overflow:auto;">
+                <li v-for="(c, index) in showNotEnd">
+                  <div class="block d-flex align-items-center">
+                    <a :href="c.href" class="tag is-large flex-grow-1">
+                      {{ index + 1 }} - {{ c.name }}
+                    </a>
+
+                    <a href="#" class=" btn-link btn-done" @click="done(c._id)"
+                      >&#10004;</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-6 " style="padding: 1rem;">
+              <div>
+                <h3 style="text-align: center; display: inline;">Finished</h3>
+                ({{ endTime }})
+              </div>
+              <div class="form-group  mb-3">
+                <div class="input-group input-group-alternative">
+                  <input
+                    placeholder="search ....."
+                    type="text"
+                    class="form-control"
+                    v-model="searchEnd"
+                  />
+                </div>
+              </div>
+              <ul class="todo-list" style="height: 300px; overflow:auto;">
+                <li v-for="(c, index) in showEnd">
+                  <div class="block d-flex align-items-center">
+                    <a :href="c.href" class="tag is-large flex-grow-1">
+                      {{ index + 1 }} - {{ c.name }}
+                    </a>
+
+                    <a
+                      href="#"
+                      class="btn-link btn-done "
+                      @click="notDone(c._id)"
+                    >
+                      &#10008;</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      const dbConnect = require("./assets/data/db");
+      const courses = require("./assets/data/courses.model");
+      const shell = require("electron").shell;
+      document.addEventListener("click", function(event) {
+        if (
+          event.target.tagName === "A" &&
+          event.target.href.startsWith("http")
+        ) {
+          event.preventDefault();
+          shell.openExternal(event.target.href);
+        }
+      });
+    </script>
+    <script src="./assets/vendor/vue/vue.js"></script>
+    <script src="./assets/js/main.js"></script>
+  </body>
+</html>
